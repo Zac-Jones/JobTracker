@@ -1,0 +1,33 @@
+spring:
+  devtools:
+    restart:
+      enabled: ${DEVTOOLS_RESTART_ENABLED}
+      additional-paths: ${DEVTOOLS_RESTART_ADDITIONAL_PATHS}
+      poll-interval: ${DEVTOOLS_RESTART_POLL_INTERVAL}
+      quiet-period: ${DEVTOOLS_RESTART_QUIET_PERIOD}
+    livereload:
+      enabled: ${DEVTOOLS_LIVERELOAD_ENABLED}
+      port: ${DEVTOOLS_LIVERELOAD_PORT}
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO}
+    show-sql: ${JPA_SHOW_SQL}
+    properties:
+      hibernate:
+        format_sql: ${JPA_FORMAT_SQL}
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+
+logging:
+  level:
+    org.springframework.boot.devtools: ${LOG_LEVEL_DEVTOOLS}
+    dev.zac.jobTracker: ${LOG_LEVEL_APP}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE}

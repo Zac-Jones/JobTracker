@@ -1,0 +1,125 @@
+# JobTracker project gitignore
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node.js and Angular frontend
+frontend/node_modules/
+frontend/dist/
+frontend/tmp/
+frontend/out-tsc/
+frontend/bazel-out/
+frontend/.angular/
+frontend/.nx/cache/
+frontend/.sass-cache/
+frontend/connect.lock
+frontend/coverage/
+frontend/libpeerconnection.log
+frontend/npm-debug.log*
+frontend/yarn-error.log
+frontend/testem.log
+frontend/typings/
+
+# Frontend environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Java and Spring Boot backend
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.properties
+backend/.gradle/
+backend/build/
+backend/!gradle/wrapper/gradle-wrapper.jar
+backend/!**/src/main/**/target/
+backend/!**/src/test/**/target/
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
+backend/bin/
+backend/!**/src/main/**/bin/
+backend/!**/src/test/**/bin/
+
+# Java compiled files
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Docker
+.docker/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+pgdata/
+postgres-data/
+
+# Log files
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# TypeScript build files
+*.tsbuildinfo
+
+# Security files
+*.pem
+*.key
+*.crt
+secrets/
+.secrets/
+
+# Documentation build
+docs/build/
+
+# Backup files
+*.bak
+*.backup
+*.orig

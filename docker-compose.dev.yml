@@ -1,0 +1,109 @@
+# Development deployment configuration for JobTracker application
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    container_name: jobtracker-postgres-dev
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobtracker-dev-network
+  backend-dev:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: jobtracker-backend-dev
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${JPA_DDL_AUTO}
+      SPRING_JPA_SHOW_SQL: ${JPA_SHOW_SQL}
+      SPRING_DEVTOOLS_RESTART_ENABLED: ${DEVTOOLS_RESTART_ENABLED}
+      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: ${DEVTOOLS_LIVERELOAD_ENABLED}
+
+      SPRING_APPLICATION_NAME: ${SPRING_APPLICATION_NAME}
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DRIVER: ${DB_DRIVER}
+      JPA_DDL_AUTO: ${JPA_DDL_AUTO}
+      JPA_SHOW_SQL: ${JPA_SHOW_SQL}
+      JPA_FORMAT_SQL: ${JPA_FORMAT_SQL}
+      DEVTOOLS_RESTART_ENABLED: ${DEVTOOLS_RESTART_ENABLED}
+      DEVTOOLS_RESTART_ADDITIONAL_PATHS: ${DEVTOOLS_RESTART_ADDITIONAL_PATHS}
+      DEVTOOLS_RESTART_POLL_INTERVAL: ${DEVTOOLS_RESTART_POLL_INTERVAL}
+      DEVTOOLS_RESTART_QUIET_PERIOD: ${DEVTOOLS_RESTART_QUIET_PERIOD}
+      DEVTOOLS_LIVERELOAD_ENABLED: ${DEVTOOLS_LIVERELOAD_ENABLED}
+      DEVTOOLS_LIVERELOAD_PORT: ${DEVTOOLS_LIVERELOAD_PORT}
+      LOG_LEVEL_DEVTOOLS: ${LOG_LEVEL_DEVTOOLS}
+      LOG_LEVEL_APP: ${LOG_LEVEL_APP}
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: ${MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE}
+    ports:
+      - "${BACKEND_PORT}:8080"
+      - "${DEBUG_PORT}:5005"
+      - "${DEVTOOLS_LIVERELOAD_PORT}:35729"
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/pom.xml:/app/pom.xml:ro
+      - backend_maven_cache:/root/.m2
+    depends_on:
+      postgres:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src
+          target: /app/src
+          ignore:
+            - "**/*.class"
+        - action: rebuild
+          path: ./backend/pom.xml
+    networks:
+      - jobtracker-dev-network
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: jobtracker-frontend-dev
+    ports:
+      - "${FRONTEND_PORT}:4200"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/angular.json:/app/angular.json
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+    depends_on:
+      - backend-dev
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+        - action: sync
+          path: ./frontend/angular.json
+          target: /app/angular.json
+        - action: rebuild
+          path: ./frontend/package.json
+    networks:
+      - jobtracker-dev-network
+
+volumes:
+  postgres_dev_data:
+    driver: local
+  backend_maven_cache:
+    driver: local
+
+networks:
+  jobtracker-dev-network:
+    driver: bridge

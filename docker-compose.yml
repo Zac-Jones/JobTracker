@@ -1,0 +1,57 @@
+# Production deployment configuration for JobTracker application
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    container_name: jobtracker-postgres
+    environment:
+      POSTGRES_DB: ${PROD_POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${PROD_POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobtracker-network
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jobtracker-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: ${PROD_SPRING_PROFILES_ACTIVE}
+      SPRING_DATASOURCE_URL: ${PROD_DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${PROD_JPA_DDL_AUTO}
+    ports:
+      - "${BACKEND_PORT}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - jobtracker-network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jobtracker-frontend
+    ports:
+      - "${PROD_FRONTEND_PORT}:8080"
+    depends_on:
+      - backend
+    networks:
+      - jobtracker-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  jobtracker-network:
+    driver: bridge

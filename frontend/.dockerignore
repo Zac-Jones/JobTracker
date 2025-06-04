@@ -1,0 +1,49 @@
+# Angular frontend Docker ignore rules
+
+# Node.js and build output
+node_modules
+dist
+out-tsc
+.angular
+.cache
+.tmp
+
+# Testing and coverage
+coverage
+jest
+cypress
+cypress/screenshots
+cypress/videos
+reports
+playwright-report
+.vite
+.vitepress
+
+# Environment and log files
+*.env*
+!*.env.production
+*.log
+*.tsbuildinfo
+
+# IDE and OS files
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+
+# Version control
+.git
+.gitignore
+
+# Docker files
+Dockerfile
+Dockerfile.*
+.dockerignore
+docker-compose.yml
+docker-compose*.yml
+
+# Temporary files
+*.bak
+*.old
+*.tmp

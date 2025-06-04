@@ -1,0 +1,37 @@
+# Spring Boot backend Docker ignore rules
+
+# Build artifacts
+target/
+!target/*.jar
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IDE files
+.idea
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker files
+Dockerfile
+Dockerfile.*
+.dockerignore
+docker-compose.yml
+docker-compose*.yml
+
+# Version control
+.git
+.gitignore

@@ -1,0 +1,32 @@
+# Development build for Spring Boot application with hot reload
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+# Install Maven and file watching tools
+RUN apt-get update && \
+    apt-get install -y maven inotify-tools && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy Maven configuration for dependency caching
+COPY pom.xml .
+COPY mvnw .
+COPY mvnw.cmd .
+COPY .mvn .mvn
+
+# Cache dependencies
+RUN mvn dependency:go-offline -B
+
+# Source code mounted as volume for live reloading
+EXPOSE 8080 5005
+
+# Development environment variables
+ENV SPRING_PROFILES_ACTIVE=dev
+ENV SPRING_DEVTOOLS_RESTART_ENABLED=true
+ENV SPRING_DEVTOOLS_LIVERELOAD_ENABLED=true
+
+# Copy and setup development startup script
+COPY docker-entrypoint-dev.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint-dev.sh
+
+CMD ["/usr/local/bin/docker-entrypoint-dev.sh"]
