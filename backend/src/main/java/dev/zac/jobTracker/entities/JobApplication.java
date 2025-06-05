@@ -2,6 +2,10 @@ package dev.zac.jobTracker.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import dev.zac.jobTracker.enums.JobApplicationStatus;
 import jakarta.persistence.Column;
@@ -56,13 +60,13 @@ public class JobApplication {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private JobApplicationStatus status;
-
+    
     @Column(name = "date_last_heard_back")
     private LocalDate dateLastHeardBack;
 
-    // TODO: Use list of strings instead
-    @Column(name = "core_stack", columnDefinition = "TEXT")
-    private String coreStack;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "core_stack", columnDefinition = "jsonb")
+    private List<String> coreStack;
 
     @PositiveOrZero(message = "Experience must be positive or zero")
     @Column(name = "experience_required")

@@ -2,6 +2,7 @@ package dev.zac.jobTracker.dto.jobApplication;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import dev.zac.jobTracker.enums.JobApplicationStatus;
 import lombok.AllArgsConstructor;
@@ -21,11 +22,10 @@ public class JobApplicationDto {
     private Long id;
     private String company;
     private String jobTitle;
-    private LocalDate dateApplied;
+    private LocalDate dateApplied;    
     private JobApplicationStatus status;
     private LocalDate dateLastHeardBack;
-    // TODO: Use list of strings instead
-    private String coreStack;
+    private List<String> coreStack;
     private Integer experienceRequired;
     private String notes;
     private LocalDateTime createdAt;

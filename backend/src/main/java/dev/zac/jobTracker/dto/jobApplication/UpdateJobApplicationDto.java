@@ -1,6 +1,7 @@
 package dev.zac.jobTracker.dto.jobApplication;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import dev.zac.jobTracker.enums.JobApplicationStatus;
 import jakarta.validation.constraints.NotBlank;
@@ -34,12 +35,11 @@ public class UpdateJobApplicationDto {
 
     @NotNull(message = "Status is required")
     private JobApplicationStatus status;
-
+    
     private LocalDate dateLastHeardBack;
 
-    // TODO: Use list of strings instead
-    @Size(max = 1000, message = "Core stack must not exceed 1000 characters")
-    private String coreStack;
+    @Size(max = 50, message = "Each technology stack item must not exceed 50 characters")
+    private List<String> coreStack;
 
     @PositiveOrZero(message = "Experience required must be positive or zero")
     private Integer experienceRequired;

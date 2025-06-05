@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,14 +59,14 @@ public class User implements UserDetails {
     @NotBlank(message = "Password is required")
     @Column(nullable = false)
     private String password;
-
+    
     @PositiveOrZero(message = "Years of experience must be positive or zero")
     @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
 
-    // TODO: Use list of strings instead
-    @Column(name = "proficient_stack", columnDefinition = "TEXT")
-    private String proficientStack;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "proficient_stack", columnDefinition = "jsonb")
+    private List<String> proficientStack;
 
     @Column(name = "role_title")
     private String roleTitle;

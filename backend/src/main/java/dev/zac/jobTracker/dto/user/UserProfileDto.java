@@ -1,5 +1,7 @@
 package dev.zac.jobTracker.dto.user;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +20,6 @@ public class UserProfileDto {
     private String name;
     private String email;
     private Integer yearsOfExperience;
-    // TODO: Use list of strings instead
-    private String proficientStack;
+    private List<String> proficientStack;
     private String roleTitle;
 }

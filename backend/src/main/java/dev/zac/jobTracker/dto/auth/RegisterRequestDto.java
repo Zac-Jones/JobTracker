@@ -1,5 +1,7 @@
 package dev.zac.jobTracker.dto.auth;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -30,13 +32,12 @@ public class RegisterRequestDto {
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
     private String password;
-
+    
     @PositiveOrZero(message = "Years of experience must be positive or zero")
     private Integer yearsOfExperience;
 
-    // TODO: Use list of strings instead
-    @Size(max = 500, message = "Proficient stack must not exceed 500 characters")
-    private String proficientStack;
+    @Size(max = 50, message = "Each technology stack item must not exceed 50 characters")
+    private List<String> proficientStack;
 
     @Size(max = 100, message = "Role title must not exceed 100 characters")
     private String roleTitle;
