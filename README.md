@@ -30,7 +30,7 @@ A full-stack job tracking application built with Spring Boot and Angular.
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Zac-Jones/JobTracker.git
    cd JobTracker
    ```
 
