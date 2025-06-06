@@ -44,15 +44,15 @@ public class JobApplicationService {
         
         log.info("Creating job application for user ID: {} at company: {}", 
                 currentUser.getId(), createRequest.getCompany());
-
-        JobApplication jobApplication = JobApplication.builder()
+                
+                JobApplication jobApplication = JobApplication.builder()
                 .company(createRequest.getCompany())
                 .jobTitle(createRequest.getJobTitle())
                 .dateApplied(createRequest.getDateApplied())
                 .status(createRequest.getStatus())
-                .dateLastHeardBack(createRequest.getDateLastHeardBack())
-                .coreStack(createRequest.getCoreStack())
-                .experienceRequired(createRequest.getExperienceRequired())
+                .lastResponseDate(createRequest.getLastResponseDate())
+                .technologyStack(createRequest.getTechnologyStack())
+                .requiredExperience(createRequest.getRequiredExperience())
                 .notes(createRequest.getNotes())
                 .user(currentUser)
                 .build();
@@ -110,15 +110,15 @@ public class JobApplicationService {
         
         JobApplication application = jobApplicationRepository.findByIdAndUser(applicationId, currentUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Job application not found with ID: " + applicationId));
-
+                
         // Update fields
         application.setCompany(updateRequest.getCompany());
         application.setJobTitle(updateRequest.getJobTitle());
         application.setDateApplied(updateRequest.getDateApplied());
         application.setStatus(updateRequest.getStatus());
-        application.setDateLastHeardBack(updateRequest.getDateLastHeardBack());
-        application.setCoreStack(updateRequest.getCoreStack());
-        application.setExperienceRequired(updateRequest.getExperienceRequired());
+        application.setLastResponseDate(updateRequest.getLastResponseDate());
+        application.setTechnologyStack(updateRequest.getTechnologyStack());
+        application.setRequiredExperience(updateRequest.getRequiredExperience());
         application.setNotes(updateRequest.getNotes());
 
         JobApplication updatedApplication = jobApplicationRepository.save(application);
@@ -222,7 +222,7 @@ public class JobApplicationService {
      *
      * @param application the job application entity
      * @return job application DTO
-     */
+     */    
     private JobApplicationDto convertToJobApplicationDto(JobApplication application) {
         return JobApplicationDto.builder()
                 .id(application.getId())
@@ -230,9 +230,9 @@ public class JobApplicationService {
                 .jobTitle(application.getJobTitle())
                 .dateApplied(application.getDateApplied())
                 .status(application.getStatus())
-                .dateLastHeardBack(application.getDateLastHeardBack())
-                .coreStack(application.getCoreStack())
-                .experienceRequired(application.getExperienceRequired())
+                .lastResponseDate(application.getLastResponseDate())
+                .technologyStack(application.getTechnologyStack())
+                .requiredExperience(application.getRequiredExperience())
                 .notes(application.getNotes())
                 .createdAt(application.getCreatedAt())
                 .updatedAt(application.getUpdatedAt())

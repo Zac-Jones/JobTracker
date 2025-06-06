@@ -36,13 +36,13 @@ public class CreateJobApplicationDto {
     @NotNull(message = "Status is required")
     private JobApplicationStatus status;    
     
-    private LocalDate dateLastHeardBack;
+    private LocalDate lastResponseDate;
 
     @Size(max = 50, message = "Each technology stack item must not exceed 50 characters")
-    private List<String> coreStack;
+    private List<String> technologyStack;
 
     @PositiveOrZero(message = "Experience required must be positive or zero")
-    private Integer experienceRequired;
+    private Integer requiredExperience;
 
     @Size(max = 2000, message = "Notes must not exceed 2000 characters")
     private String notes;

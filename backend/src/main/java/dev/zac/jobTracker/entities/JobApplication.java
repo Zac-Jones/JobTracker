@@ -61,16 +61,16 @@ public class JobApplication {
     @Column(nullable = false)
     private JobApplicationStatus status;
     
-    @Column(name = "date_last_heard_back")
-    private LocalDate dateLastHeardBack;
+    @Column(name = "last_response_date")
+    private LocalDate lastResponseDate;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "core_stack", columnDefinition = "jsonb")
-    private List<String> coreStack;
+    @Column(name = "technology_stack", columnDefinition = "jsonb")
+    private List<String> technologyStack;
 
     @PositiveOrZero(message = "Experience must be positive or zero")
-    @Column(name = "experience_required")
-    private Integer experienceRequired;
+    @Column(name = "required_experience")
+    private Integer requiredExperience;
 
     @Column(columnDefinition = "TEXT")
     private String notes;

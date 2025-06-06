@@ -51,13 +51,13 @@ public class UserService {
                 && userRepository.existsByEmail(updateRequest.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists: " + updateRequest.getEmail());
         }
-
+        
         // Update user fields
         user.setName(updateRequest.getName());
         user.setEmail(updateRequest.getEmail());
-        user.setYearsOfExperience(updateRequest.getYearsOfExperience());
-        user.setProficientStack(updateRequest.getProficientStack());
-        user.setRoleTitle(updateRequest.getRoleTitle());
+        user.setExperienceYears(updateRequest.getExperienceYears());
+        user.setTechnologyStack(updateRequest.getTechnologyStack());
+        user.setJobTitle(updateRequest.getJobTitle());
 
         User updatedUser = userRepository.save(user);
         
@@ -91,9 +91,9 @@ public class UserService {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .yearsOfExperience(user.getYearsOfExperience())
-                .proficientStack(user.getProficientStack())
-                .roleTitle(user.getRoleTitle())
+                .experienceYears(user.getExperienceYears())
+                .technologyStack(user.getTechnologyStack())
+                .jobTitle(user.getJobTitle())
                 .build();
     }
 }

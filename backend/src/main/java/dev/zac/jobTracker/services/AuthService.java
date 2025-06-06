@@ -46,9 +46,9 @@ public class AuthService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .yearsOfExperience(request.getYearsOfExperience())
-                .proficientStack(request.getProficientStack())
-                .roleTitle(request.getRoleTitle())
+                .experienceYears(request.getExperienceYears())
+                .technologyStack(request.getTechnologyStack())
+                .jobTitle(request.getJobTitle())
                 .role(User.Role.USER)
                 .build();
 

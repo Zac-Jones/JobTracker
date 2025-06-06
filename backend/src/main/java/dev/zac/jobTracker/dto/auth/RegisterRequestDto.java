@@ -34,11 +34,11 @@ public class RegisterRequestDto {
     private String password;
     
     @PositiveOrZero(message = "Years of experience must be positive or zero")
-    private Integer yearsOfExperience;
+    private Integer experienceYears;
 
     @Size(max = 50, message = "Each technology stack item must not exceed 50 characters")
-    private List<String> proficientStack;
+    private List<String> technologyStack;
 
-    @Size(max = 100, message = "Role title must not exceed 100 characters")
-    private String roleTitle;
+    @Size(max = 100, message = "Job title must not exceed 100 characters")
+    private String jobTitle;
 }

@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileDto {
-
+    
     private Long id;
     private String name;
     private String email;
-    private Integer yearsOfExperience;
-    private List<String> proficientStack;
-    private String roleTitle;
+    private Integer experienceYears;
+    private List<String> technologyStack;
+    private String jobTitle;
 }

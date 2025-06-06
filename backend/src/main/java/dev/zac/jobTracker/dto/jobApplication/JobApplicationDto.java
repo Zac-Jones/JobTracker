@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobApplicationDto {
-
+    
     private Long id;
     private String company;
     private String jobTitle;
     private LocalDate dateApplied;    
     private JobApplicationStatus status;
-    private LocalDate dateLastHeardBack;
-    private List<String> coreStack;
-    private Integer experienceRequired;
+    private LocalDate lastResponseDate;
+    private List<String> technologyStack;
+    private Integer requiredExperience;
     private String notes;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

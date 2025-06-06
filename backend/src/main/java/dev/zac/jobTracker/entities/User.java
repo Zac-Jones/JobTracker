@@ -61,15 +61,15 @@ public class User implements UserDetails {
     private String password;
     
     @PositiveOrZero(message = "Years of experience must be positive or zero")
-    @Column(name = "years_of_experience")
-    private Integer yearsOfExperience;
+    @Column(name = "experience_years")
+    private Integer experienceYears;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "proficient_stack", columnDefinition = "jsonb")
-    private List<String> proficientStack;
+    @Column(name = "technology_stack", columnDefinition = "jsonb")
+    private List<String> technologyStack;
 
-    @Column(name = "role_title")
-    private String roleTitle;
+    @Column(name = "job_title")
+    private String jobTitle;
 
     @NotNull
     @Enumerated(EnumType.STRING)
