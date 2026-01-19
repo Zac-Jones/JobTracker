@@ -2,9 +2,11 @@ package dev.zac.jobTracker.services;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.zac.jobTracker.dto.auth.ChangePasswordDto;
 import dev.zac.jobTracker.dto.user.UpdateUserProfileDto;
 import dev.zac.jobTracker.dto.user.UserProfileDto;
 import dev.zac.jobTracker.entities.User;
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Get current authenticated user's profile.
@@ -64,6 +67,40 @@ public class UserService {
         log.info("Profile updated successfully for user ID: {}", updatedUser.getId());
         
         return convertToUserProfileDto(updatedUser);
+    }
+
+    /**
+     * Change current authenticated user's password.
+     *
+     * @param changePasswordRequest the password change request
+     * @throws IllegalArgumentException if current password is incorrect or passwords don't match
+     */
+    @Transactional
+    public void changePassword(ChangePasswordDto changePasswordRequest) {
+        User user = getCurrentUser();
+        
+        log.info("Password change request for user ID: {}", user.getId());
+
+        // Verify current password
+        if (!passwordEncoder.matches(changePasswordRequest.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+        // Verify new password and confirmation match
+        if (!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmPassword())) {
+            throw new IllegalArgumentException("New password and confirmation do not match");
+        }
+
+        // Check that new password is different from current password
+        if (passwordEncoder.matches(changePasswordRequest.getNewPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("New password must be different from current password");
+        }
+
+        // Update password with encryption
+        user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+        userRepository.save(user);
+        
+        log.info("Password changed successfully for user ID: {}", user.getId());
     }
 
     /**

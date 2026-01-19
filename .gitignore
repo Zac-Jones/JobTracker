@@ -43,7 +43,7 @@ frontend/.env.production.local
 # Java and Spring Boot backend
 backend/target/
 backend/.mvn/wrapper/maven-wrapper.jar
-backend/.mvn/wrapper/maven-wrapper.properties
+backend/.mvn/
 backend/.gradle/
 backend/build/
 backend/!gradle/wrapper/gradle-wrapper.jar

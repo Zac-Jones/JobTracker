@@ -1,9 +1,11 @@
 package dev.zac.jobTracker.controllers;
 
 import dev.zac.jobTracker.dto.auth.AuthResponseDto;
+import dev.zac.jobTracker.dto.auth.ChangePasswordDto;
 import dev.zac.jobTracker.dto.auth.LoginRequestDto;
 import dev.zac.jobTracker.dto.auth.RegisterRequestDto;
 import dev.zac.jobTracker.services.AuthService;
+import dev.zac.jobTracker.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     /**
      * Register a new user.
@@ -60,5 +63,20 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         return ResponseEntity.ok("Logged out successfully");
+    }
+
+    /**
+     * Change user password.
+     *
+     * @param changePasswordRequest the password change request
+     * @return success response
+     */
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordRequest) {
+        log.info("Password change request received");
+        
+        userService.changePassword(changePasswordRequest);
+        
+        return ResponseEntity.ok("Password changed successfully");
     }
 }
